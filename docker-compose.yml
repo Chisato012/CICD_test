@@ -12,11 +12,11 @@ services:
       context: ./backend
     container_name: resume-backend
     ports:
-      - "8080:8080"
+      - "${BACKEND_PORT:-8080}:8080"
     environment:
       # Dùng host.docker.internal để truy cập container local-mongo
       # đang chạy trên máy host (port 27017)
-      - SPRING_MONGODB_URI=mongodb://host.docker.internal:27017/cv_screening
+      - SPRING_MONGODB_URI=${SPRING_MONGODB_URI:-mongodb://host.docker.internal:27017/cv_screening}
 
   # --- Frontend (React + Nginx) ---
   frontend:
@@ -24,6 +24,6 @@ services:
       context: ./frontend
     container_name: resume-frontend
     ports:
-      - "3000:80"
+      - "${FRONTEND_PORT:-3000}:80"
     depends_on:
       - backend
